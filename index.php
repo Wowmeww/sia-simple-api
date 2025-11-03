@@ -16,11 +16,11 @@ require_once __DIR__ . "/db.php";
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', trim($uri, '/'));
 
-$resource = $uri[2] ?? null;  // e.g. "products"
-$id = $uri[3] ?? null;        // e.g. "1"
+$resource = $uri[1] ?? null;  // e.g. "products"
+$id = $uri[2] ?? null;        // e.g. "1"
 $method = $_SERVER['REQUEST_METHOD'];
-if (!$resource || $uri[1] !== 'api') {
-    echo json_encode(["message" => "Welcome to the SIA2 REST API make sure you're at /sia2/api/products"]);
+if (!$resource) {
+    echo json_encode(["message" => "Welcome to the SIA2 REST API make sure you're at /api/products"]);
     exit;
 }
 
