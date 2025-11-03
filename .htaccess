@@ -1,0 +1,12 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Set your project root if it's inside a subfolder (optional)
+# RewriteBase /sia2/
+
+# If the request is for an existing file or directory, serve it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Otherwise, route everything to index.php
+RewriteRule ^ index.php [QSA,L]
