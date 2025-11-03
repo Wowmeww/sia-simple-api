@@ -1,24 +1,18 @@
 <?php
-// Database configuration
-$host = "localhost";
-$db_name = "sia2_db"; // your database name
-$username = "root";   // default user in XAMPP
-$password = "secret";       // empty password by default
+$host = getenv('DB_HOST') ?: '127.0.0.1';
+$db   = getenv('DB_NAME') ?: 'sia2';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASS') ?: '';
 
 try {
-    // Create a new PDO connection
-    $conn = new PDO("mysql:host=$host;dbname=$db_name;charset=utf8mb4", $username, $password);
-
-    // Set error mode to exception for better debugging
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Optional: Disable emulated prepares for better security
-    $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $dsn = "mysql:host={$host};dbname={$db};charset=utf8mb4";
+    $pdo = new PDO($dsn, $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    // Return error as JSON and stop execution
     echo json_encode([
         "error" => "Database connection failed",
         "details" => $e->getMessage()
     ]);
     exit;
 }
+?>
